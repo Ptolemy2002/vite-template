@@ -1,50 +1,21 @@
-# React + TypeScript + Vite
+# TypeScript React Library
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Peer Dependencies
+- `react^18.3.1`
+- `react-dom^18.3.1`
 
-Currently, two official plugins are available:
+## Commands
+The following commands exist in the project:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+- `npm run uninstall` - Uninstalls all dependencies for the library
+- `npm run reinstall` - Uninstalls and then Reinstalls all dependencies for the library
+- `npm run example-uninstall` - Uninstalls all dependencies for the example app
+- `npm run example-install` - Installs all dependencies for the example app
+- `npm run example-reinstall` - Uninstalls and then Reinstalls all dependencies for the example app
+- `npm run example-start` - Starts the example app after building the library
+- `npm run build` - Builds the library
+- `npm run release` - Publishes the library to npm without changing the version
+- `npm run release-patch` - Publishes the library to npm with a patch version bump
+- `npm run release-minor` - Publishes the library to npm with a minor version bump
+- `npm run release-major` - Publishes the library to npm with a major version bump
+Hyper Icon
