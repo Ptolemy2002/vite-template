@@ -5,8 +5,7 @@
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ptolemy2002/js-utils",
-    "directory": "example"
+    "url": "https://github.com/Ptolemy2002/"
   },
   "scripts": {
     "dev": "vite --port 3000",
