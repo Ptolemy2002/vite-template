@@ -46,6 +46,10 @@ steps:
           default:
             eval: "https://{{ remote_provider }}/{{ remote_owner }}/{{ project_name | kebab-case }}"
 
+  - degit: Ptolemy2002/npm-bash-scripts/general
+    to:
+      path: "scripts"
+
   - update: "README.md"
   - update: "package.json"
   - update: "src/**/*.jsx"

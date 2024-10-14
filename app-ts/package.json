@@ -8,7 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postinstall": "npx typesync"
+    "postinstall": "npx typesync",
+    "uninstall": "bash ./scripts/uninstall.sh",
+    "reinstall": "bash ./scripts/reinstall.sh"
   },
   "repository": {
     "type": "git",
