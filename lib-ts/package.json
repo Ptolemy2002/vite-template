@@ -1,11 +1,11 @@
 {
-  "name": "@local/lib",
+  "name": "{{tmplr.package_identifier}}",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ptolemy2002/"
+    "url": "{{tmplr.repository_url}}"
   },
   "scripts": {
     "dev": "vite --port 3000",

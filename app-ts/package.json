@@ -1,5 +1,5 @@
 {
-  "name": "app-ts",
+  "name": "{{tmplr.package_identifier}}",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -9,6 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "postinstall": "npx typesync"
+  },
+  "repository": {
+    "type": "git",
+    "url": "{{tmplr.repository_url}}"
   },
   "dependencies": {
     "axios": "^1.7.2",

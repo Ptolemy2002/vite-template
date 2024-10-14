@@ -1,0 +1,73 @@
+steps:
+  - read: remote_provider
+    from: git.remote_provider
+    fallback:
+      from: env.TMPLR_REMOTE_PROVIDER
+  - read: remote_owner
+    from: git.remote_owner
+    fallback:
+      from: env.TMPLR_GIT_USER
+      
+  - read: project_name
+    prompt: "Project name"
+    choices:
+      - From file:
+          from: filesystem.rootdir
+      - Custom:
+          prompt: "Enter project name:"
+          default:
+            from: filesystem.rootdir
+
+  - read: workspace_name
+    prompt: "Workspace name"
+    choices:
+      - From git username:
+          from: remote_owner
+      - Custom:
+          prompt: "Enter workspace name:"
+          default:
+            from: remote_owner
+      - None: ""
+  
+  - if: workspace_name
+    read: package_identifier
+    eval: "@{{ workspace_name | kebab-case }}/{{ project_name | kebab-case }}"
+    else:
+      read: package_identifier
+      eval: "{{ project_name | kebab-case }}"
+
+  - read: repository_url
+    prompt: "Repository URL"
+    choices:
+      - From git:
+          eval: "https://{{ remote_provider }}/{{ remote_owner }}/{{ project_name | kebab-case }}"
+      - Custom:
+          prompt: "Enter repository URL:"
+          default:
+            eval: "https://{{ remote_provider }}/{{ remote_owner }}/{{ project_name | kebab-case }}"
+
+  - degit: Ptolemy2002/npm-bash-scripts/general
+    to:
+      path: "{{ tmpdir.scripts }}/general"
+  - degit: Ptolemy2002/npm-bash-scripts/for-lib
+    to:
+      path: "{{ tmpdir.scripts }}/for-lib"
+  
+  - copy:
+      path: "{{ tmpdir.scripts }}/general/**/*.*"
+    to: "scripts"
+  - copy:
+      path: "{{ tmpdir.scripts }}/for-lib/**/*.*"
+    to: "scripts"
+
+  - update: "README.md"
+  - update: "package.json"
+  - update: "index.html"
+  - update: "lib/**/*.tsx"
+  - update: "lib/**/*.ts"
+  - update: "src/**/*.tsx"
+  - update: "src/**/*.ts"
+  - update: "src/**/*.less"
+  - remove: "package-lock.json"
+  - remove: "dist"
+  - remove: "node_modules"

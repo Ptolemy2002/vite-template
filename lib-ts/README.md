@@ -1,4 +1,4 @@
-# TypeScript React Library
+# {{ tmplr.project_name }}
 
 ## Peer Dependencies
 - `react^18.3.1`

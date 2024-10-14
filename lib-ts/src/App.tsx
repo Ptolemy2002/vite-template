@@ -1,4 +1,4 @@
-import { Example, useBasicCounter } from "@local/lib";
+import { Example, useBasicCounter } from "{{tmplr.package_identifier}}";
 
 function App() {
   const { count, setCount } = useBasicCounter();
