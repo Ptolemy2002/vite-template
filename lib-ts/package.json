@@ -8,7 +8,7 @@
     "url": "{{tmplr.repository_url}}"
   },
   "scripts": {
-    "dev": "vite --port 3000",
+    "dev": "npm run build && vite --port 3000",
     "build": "tsc -b ./tsconfig.lib.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
