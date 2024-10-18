@@ -1,8 +1,4 @@
 steps:
-  - read: remote_provider
-    from: git.remote_provider
-    fallback:
-      from: env.TMPLR_REMOTE_PROVIDER
   - read: remote_owner
     from: git.remote_owner
     fallback:
@@ -49,14 +45,21 @@ steps:
       eval: "{{ package_id }}"
 
   - read: repository_url
-    prompt: "Repository URL"
+    prompt: "Git URL"
     choices:
       - From git:
-          eval: "https://{{ remote_provider }}/{{ remote_owner }}/{{ package_id }}"
+          eval: "https://github.com/{{ remote_owner }}/{{ package_id }}"
       - Custom:
-          prompt: "Enter repository URL:"
-          default:
-            eval: "https://{{ remote_provider }}/{{ remote_owner }}/{{ package_id }}"
+          steps:
+            - read: custom_remote_owner
+              prompt: "Git Owner"
+              default:
+                from: remote_owner
+            - read: custom_package_id
+              prompt: "Git Repository Name"
+              default:
+                from: package_id
+          eval: "https://github.com/{{ custom_remote_owner }}/{{ custom_package_id }}"
 
   - degit: Ptolemy2002/npm-bash-scripts/general
     to:
