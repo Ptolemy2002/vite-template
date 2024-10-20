@@ -19,8 +19,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": "./",
     "paths": {
+      "*": ["types/*.d.ts"],
       "src/*": ["src/*"]
     }
   },
-  "include": ["vite.config.ts", "external-libs.d.ts"]
+  "include": ["vite.config.ts", "external-libs.d.ts", "types"]
 }
