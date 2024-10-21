@@ -1,5 +1,5 @@
 {
   "extends": "./tsconfig.app.json",
-  "include": ["lib", "types"]
+  "include": ["lib", "types/**/*.d.ts"]
 }
   
