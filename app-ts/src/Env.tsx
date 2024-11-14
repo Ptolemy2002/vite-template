@@ -1,16 +1,20 @@
-import { z } from 'zod';
+import { z, ZodUnion, ZodString, ZodLiteral, ZodNull } from 'zod';
 import { createContext, useContext } from 'react';
 
-function nullableUrl(defaultValue?: string | null) {
-    const result = z.union([
-        z.string().trim().url(),
-        z.literal(""),
-        z.null()
-    ]);
+function nullableUrl(defaultValue?: string | null, emptyIsDefault = true) {
+    const urlType = z.string().trim().url();
+    const nullType = z.null();
+
+    let result: ZodUnion<
+        [ZodString, ZodLiteral<"">, ZodNull]
+    > | ZodUnion<[ZodString, ZodNull]> = z.union([urlType, nullType]);;
+    if (emptyIsDefault) {
+        result = z.union([urlType, z.literal(""), nullType]);
+    }
 
     if (defaultValue !== undefined) {
         return result
-            .transform(value => value === "" ? defaultValue : value)
+            .transform(value => emptyIsDefault && value === "" ? defaultValue : value)
             .optional()
             .default(defaultValue);
     }
@@ -19,16 +23,17 @@ function nullableUrl(defaultValue?: string | null) {
 }
 
 
-function url(defaultValue?: string) {
-    const result = z.union([
-        z.string().trim().url(),
-        z.literal("")
-    ]);
+function url(defaultValue?: string, emptyIsDefault = true) {
+    const urlType = z.string().trim().url();
+
+    let result: ZodString | ZodUnion<[ZodString, ZodLiteral<"">]> = urlType;
+    if (emptyIsDefault) {
+        result = z.union([urlType, z.literal("")]);
+    }
 
     if (defaultValue !== undefined) {
         return result
-            .transform(value => value === "" ? defaultValue : value)
-            .optional()
+            .transform(value => emptyIsDefault && value === "" ? defaultValue : value)
             .default(defaultValue);
     }
 
@@ -37,14 +42,10 @@ function url(defaultValue?: string) {
 
 export const EnvSchema = z.object({
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-    PORT: z.coerce.number()
-        .int({message: "PORT must be an integer"})
-        .positive({message: "PORT must be positive"})
-        .default(8080),
-    REACT_APP_DEV_API_URL: url("http://localhost:8080"),
-    REACT_APP_PROD_API_URL: nullableUrl(null),
-    REACT_APP_DEV_CLIENT_URL: url("http://localhost:3000"),
-    REACT_APP_PROD_CLIENT_URL: nullableUrl(null),
+    VITE_DEV_API_URL: url("http://localhost:8080"),
+    VITE_PROD_API_URL: nullableUrl(null),
+    VITE_DEV_CLIENT_URL: url("http://localhost:3000"),
+    VITE_PROD_CLIENT_URL: nullableUrl(null),
 
     // Additional environment variables here
 });
@@ -54,7 +55,6 @@ export type EnvType = {
     isProd: boolean,
     isDev: boolean,
     isTest: boolean,
-    port: number,
     devApiUrl: string,
     prodApiUrl: string | null,
     devClientUrl: string,
@@ -71,11 +71,10 @@ export default function getEnv(): EnvType {
         isProd: Env.NODE_ENV === "production",
         isDev: Env.NODE_ENV === "development",
         isTest: Env.NODE_ENV === "test",
-        port: Env.PORT,
-        devApiUrl: Env.REACT_APP_DEV_API_URL,
-        prodApiUrl: Env.REACT_APP_PROD_API_URL,
-        devClientUrl: Env.REACT_APP_DEV_CLIENT_URL,
-        prodClientUrl: Env.REACT_APP_PROD_CLIENT_URL
+        devApiUrl: Env.VITE_DEV_API_URL,
+        prodApiUrl: Env.VITE_PROD_API_URL,
+        devClientUrl: Env.VITE_DEV_CLIENT_URL,
+        prodClientUrl: Env.VITE_PROD_CLIENT_URL
     });
 }
 
