@@ -1,4 +1,4 @@
-import { z, ZodUnion, ZodString, ZodLiteral, ZodNull } from 'zod';
+import { z, ZodLiteral, ZodNull, ZodString, ZodUnion } from 'zod';
 import { createContext, useContext } from 'react';
 
 function nullableUrl(defaultValue?: string | null, emptyIsDefault = true) {
@@ -42,7 +42,7 @@ function url(defaultValue?: string, emptyIsDefault = true) {
 
 export const EnvSchema = z.object({
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
-    VITE_DEV_API_URL: url("http://localhost:8080"),
+    VITE_DEV_API_URL: url("http://localhost:8080", false),
     VITE_PROD_API_URL: nullableUrl(null),
     VITE_DEV_CLIENT_URL: url("http://localhost:3000"),
     VITE_PROD_CLIENT_URL: nullableUrl(null),
@@ -63,25 +63,31 @@ export type EnvType = {
     // Additional environment variables here
 };
 let Env: z.infer<typeof EnvSchema> | null = null;
+let EnvInstance: EnvType | null = null;
 
 export default function getEnv(): EnvType {
-    if (Env === null) Env = EnvSchema.parse(process.env);
-    return Object.freeze({
-        nodeEnv: Env.NODE_ENV,
-        isProd: Env.NODE_ENV === "production",
-        isDev: Env.NODE_ENV === "development",
-        isTest: Env.NODE_ENV === "test",
-        devApiUrl: Env.VITE_DEV_API_URL,
-        prodApiUrl: Env.VITE_PROD_API_URL,
-        devClientUrl: Env.VITE_DEV_CLIENT_URL,
-        prodClientUrl: Env.VITE_PROD_CLIENT_URL
-    });
+    if (Env === null) Env = EnvSchema.parse(import.meta.env);
+    if (!EnvInstance) {
+        EnvInstance = Object.freeze({
+            nodeEnv: Env.NODE_ENV,
+            isProd: Env.NODE_ENV === "production",
+            isDev: Env.NODE_ENV === "development",
+            isTest: Env.NODE_ENV === "test",
+            devApiUrl: Env.VITE_DEV_API_URL,
+            prodApiUrl: Env.VITE_PROD_API_URL,
+            devClientUrl: Env.VITE_DEV_CLIENT_URL,
+            prodClientUrl: Env.VITE_PROD_CLIENT_URL
+        });
+    }
+
+    return EnvInstance;
 }
 
 export const EnvContext = createContext<EnvType | undefined>(undefined);
 
 export function EnvProvider({ children }: { children: React.ReactNode }) {
-    return <EnvContext.Provider value={getEnv()}>{children}</EnvContext.Provider>;
+    const env = getEnv();
+    return <EnvContext.Provider value={env}>{children}</EnvContext.Provider>;
 }
 
 export function useEnv() {
