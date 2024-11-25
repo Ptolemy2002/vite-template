@@ -65,9 +65,9 @@ export type EnvType = {
 let Env: z.infer<typeof EnvSchema> | null = null;
 let EnvInstance: EnvType | null = null;
 
-export default function getEnv(): EnvType {
-    if (Env === null) Env = EnvSchema.parse(import.meta.env);
-    if (!EnvInstance) {
+export default function getEnv(createNew=false): EnvType {
+    if (createNew || Env === null) Env = EnvSchema.parse(import.meta.env);
+    if (createNew || !EnvInstance) {
         EnvInstance = Object.freeze({
             nodeEnv: Env.NODE_ENV,
             isProd: Env.NODE_ENV === "production",
