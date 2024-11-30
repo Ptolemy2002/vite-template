@@ -10,7 +10,12 @@
     "preview": "vite preview",
     "postinstall": "npx typesync",
     "uninstall": "bash ./scripts/uninstall.sh",
-    "reinstall": "bash ./scripts/reinstall.sh"
+    "reinstall": "bash ./scripts/reinstall.sh",
+    "rmzi": "bash ./scripts/rmzi.sh"
+  },
+  "author": {
+    "name": "{{tmplr.author_name}}",
+    "email": "{{tmplr.author_email}}"
   },
   "repository": {
     "type": "git",

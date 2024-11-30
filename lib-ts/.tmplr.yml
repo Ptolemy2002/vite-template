@@ -3,6 +3,11 @@ steps:
     from: git.remote_owner
     fallback:
       from: env.TMPLR_GIT_USER
+  
+  - read: remote_email
+    from: git.remote_email
+    fallback:
+      from: env.TMPLR_GIT_EMAIL
       
   - read: project_name
     prompt: "Project name"
@@ -35,6 +40,30 @@ steps:
           default:
             from: remote_owner
       - None: ""
+
+  - read: author_name
+    prompt: "Author name"
+    choices:
+      - From git username:
+          from: remote_owner
+      - From env:
+          from: env.TMPLR_AUTHOR_NAME
+      - Custom:
+          prompt: "Enter workspace name:"
+          default:
+            from: remote_owner
+  
+  - read: author_email
+    prompt: "Author email"
+    choices:
+      - From git email:
+          from: remote_email
+      - From env:
+          from: env.TMPLR_AUTHOR_EMAIL
+      - Custom:
+          prompt: "Enter author email:"
+          default:
+            from: remote_email
   
   - if: workspace_name
     read: package_identifier
@@ -84,4 +113,5 @@ steps:
   - update: "src/**/*.less"
   - remove: "package-lock.json"
   - remove: "dist"
+  - remove: ".env"
   - remove: "node_modules"

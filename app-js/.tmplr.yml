@@ -13,7 +13,6 @@ steps:
           prompt: "Enter project name:"
           default:
             from: filesystem.rootdir
-
   - read: package_id
     prompt: "Package ID"
     choices:
@@ -36,6 +35,28 @@ steps:
           default:
             from: remote_owner
       - None: ""
+
+  - read: author_name
+    prompt: "Author name"
+    choices:
+      - From git:
+          from: remote_owner
+      - From env:
+          from: env.TMPLR_AUTHOR_NAME
+      - Custom:
+          prompt: "Enter workspace name:"
+          default:
+            from: remote_owner
+  
+  - read: author_email
+    prompt: "Author email"
+    choices:
+      - From env:
+          from: env.TMPLR_AUTHOR_EMAIL
+      - Custom:
+          prompt: "Enter author email:"
+          default:
+            from: remote_email
   
   - if: workspace_name
     read: package_identifier
@@ -72,5 +93,6 @@ steps:
   - update: "src/**/*.less"
   - update: "index.html"
   - remove: "package-lock.json"
+  - remove: ".env"
   - remove: "dist"
   - remove: "node_modules"

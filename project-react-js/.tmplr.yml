@@ -81,18 +81,22 @@ steps:
               default:
                 from: package_id
           eval: "https://github.com/{{ custom_remote_owner }}/{{ custom_package_id }}"
-  
+
   - degit: Ptolemy2002/npm-bash-scripts/general
     to:
-      path: "scripts"
+      path: "{{ tmpdir.scripts }}/general"
+  
+  - copy:
+      path: "{{ tmpdir.scripts }}/general/**/*.*"
+    to: "scripts"
 
   - update: "README.md"
   - update: "package.json"
   - update: "index.html"
-  - update: "src/**/*.tsx"
-  - update: "src/**/*.ts"
-  - update: "src/**/*.less"
+  - update: "**/*.jsx"
+  - update: "lib/**/*.js"
   - remove: "package-lock.json"
   - remove: "dist"
+  - remove: ".vercel"
   - remove: ".env"
   - remove: "node_modules"

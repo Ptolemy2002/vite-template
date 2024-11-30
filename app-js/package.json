@@ -3,13 +3,18 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
+  "author": {
+    "name": "{{tmplr.author_name}}",
+    "email": "{{tmplr.author_email}}"
+  },
   "scripts": {
     "dev": "vite --port 3000",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "uninstall": "bash ./scripts/uninstall.sh",
-    "reinstall": "bash ./scripts/reinstall.sh"
+    "reinstall": "bash ./scripts/reinstall.sh",
+    "rmzi": "bash ./scripts/rmzi.sh"
   },
   "repository": {
     "type": "git",
