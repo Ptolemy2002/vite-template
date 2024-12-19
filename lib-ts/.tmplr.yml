@@ -89,6 +89,19 @@ steps:
                 from: package_id
           eval: "https://github.com/{{ custom_remote_owner }}/{{ custom_package_id }}"
 
+  - prompt: "Has Shared Resources?"
+    choices:
+      - Yes:
+          steps:
+            - degit: Ptolemy2002/npm-bash-scripts/for-shared
+              to:
+                path: "{{ tmpdir.scripts }}/for-shared"
+            - copy:
+                path: "{{ tmpdir.scripts }}/for-shared/**/*.*"
+              to: "scripts"
+      - No:
+          eval: "false"
+
   - degit: Ptolemy2002/npm-bash-scripts/general
     to:
       path: "{{ tmpdir.scripts }}/general"
