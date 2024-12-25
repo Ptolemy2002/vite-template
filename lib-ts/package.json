@@ -13,7 +13,8 @@
   },
   "scripts": {
     "dev": "npm run build && vite --port 3000",
-    "build": "tsc -b ./tsconfig.lib.json && vite build",
+    "build": "bash ./scripts/build.sh",
+    "_build": "tsc -b ./tsconfig.lib.json && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "postinstall": "npx typesync",
