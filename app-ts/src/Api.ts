@@ -1,9 +1,14 @@
 import axios, { AxiosInstance, CreateAxiosDefaults } from "axios";
+import { TypedAxios, RouteDef } from "typed-axios-instance";
 import getEnv from "src/Env";
 
 export let Api: AxiosInstance | null = null;
 
-export default function getApi(options: CreateAxiosDefaults={}, createNew=false): AxiosInstance {
+type RouteDefArray<T extends RouteDef[]> = T;
+
+export type ApiRoutes = RouteDefArray<[]>;
+
+export default function getApi(options: CreateAxiosDefaults={}, createNew=false): TypedAxios<ApiRoutes> {
     if (!createNew && Api) {
         return Api;
     }
