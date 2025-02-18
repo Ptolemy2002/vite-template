@@ -20,7 +20,8 @@
     "baseUrl": "./",
     "paths": {
       "src/*": ["src/*"]
-    }
+    },
+    "noUncheckedIndexedAccess": true
   },
   "include": ["vite.config.ts", "external-libs.d.ts", "types/**/*.d.ts"]
 }
