@@ -12,7 +12,8 @@
     "postinstall": "npx typesync",
     "uninstall": "bash ./scripts/uninstall.sh",
     "reinstall": "bash ./scripts/reinstall.sh",
-    "rmzi": "bash ./scripts/rmzi.sh"
+    "rmzi": "bash ./scripts/rmzi.sh",
+    "typecheck": "tsc --noEmit"
   },
   "author": {
     "name": "{{tmplr.author_name}}",
